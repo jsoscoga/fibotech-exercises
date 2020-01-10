@@ -1,0 +1,80 @@
+﻿@using Demo.ViewModels
+@model ImageViewModel
+@{
+    ViewBag.Title = "Uploading file to send";
+}
+
+<h2>File to upload</h2>
+
+@using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        @Html.TextBox("imageFile", "", new { type = "file", accept = "image/x-png,image/gif,image/jpeg" }) <br />
+        <input type="submit" value="Upload" />
+    </div>
+}
+
+<p>@ViewBag.Message</p>
+
+@if (Model != null)
+{
+    <div class="container-fluid">
+        <div class="row text-center">
+            <img src="@Url.Content(Model.RelativePath)" alt="" />
+        </div>
+        <hr />
+        @if (Model.Faces.Count > 0)
+        {
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>FaceId</th>
+                        <th>Anger</th>
+                        <th>Contempt</th>
+                        <th>Disgust</th>
+                        <th>Fear</th>
+                        <th>Happiness</th>
+                        <th>Neutral</th>
+                        <th>Sadness</th>
+                        <th>Surprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var face in Model.Faces)
+                    {
+                        {
+                            face.FaceAttributes.SetEmotionMajors();
+                        }
+                        <tr>
+                            <td>@face.FaceId.Substring(0,8)</td>
+                            <td class="@(face.FaceAttributes.EmotionMajor.Anger ? "success" : "")">
+                                @face.FaceAttributes.Emotion.Anger.ToString("#.000")
+                            </td>
+                            <td class="@(face.FaceAttributes.EmotionMajor.Contempt ? "success" : "")" >
+                                @face.FaceAttributes.Emotion.Contempt.ToString("#.000")
+                            </td>
+                            <td class="@(face.FaceAttributes.EmotionMajor.Disgust ? "success" : "")" >
+                                @face.FaceAttributes.Emotion.Disgust.ToString("#.000")
+                            </td>
+                            <td class="@(face.FaceAttributes.EmotionMajor.Fear ? "success" : "")" >
+                                @face.FaceAttributes.Emotion.Fear.ToString("#.000")
+                            </td>
+                            <td class="@(face.FaceAttributes.EmotionMajor.Happiness ? "success" : "")" >
+                                @face.FaceAttributes.Emotion.Happiness.ToString("#.000")
+                            </td>
+                            <td class="@(face.FaceAttributes.EmotionMajor.Neutral ? "success" : "")" >
+                                @face.FaceAttributes.Emotion.Neutral.ToString("#.000")
+                            </td>
+                            <td class="@(face.FaceAttributes.EmotionMajor.Sadness ? "success" : "")" >
+                                @face.FaceAttributes.Emotion.Sadness.ToString("#.000")
+                            </td>
+                            <td class="@(face.FaceAttributes.EmotionMajor.Surprise ? "success" : "")" >
+                                @face.FaceAttributes.Emotion.Surprise.ToString("#.000")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+}

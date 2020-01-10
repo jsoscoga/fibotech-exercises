@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WSImage.FileUploader" CodeBehind="FileUploader.svc.cs" %>

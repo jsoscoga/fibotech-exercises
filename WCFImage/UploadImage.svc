@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WCFImage.UploadImage" CodeBehind="UploadImage.svc.cs" %>
